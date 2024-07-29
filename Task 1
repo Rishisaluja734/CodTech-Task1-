@@ -1,0 +1,62 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import fetch_california_housing
+# Load the dataset
+data = fetch_california_housing()
+df = pd.DataFrame(data.data, columns=data.feature_names)
+df['MedHouseVal'] = data.target
+# Display the first few rows
+print(df.head())
+# Basic Data Inspection
+# Dataset shape
+print("Shape of the dataset:", df.shape)
+# Data types and missing values
+print("\nData types and missing values:")
+print(df.dtypes)
+print(df.isnull().sum())
+# Data Cleaning
+# Check for missing values
+missing_values = df.isnull().sum()
+print("\nMissing values in each column:\n", missing_values)
+# Exploratory Data Analysis (EDA)
+# Summary Statistics
+print("\nSummary statistics:")
+print(df.describe(include='all'))
+# Distribution Analysis
+# Plot histograms for all numerical features
+df.hist(bins=30, figsize=(20, 15))
+plt.show()
+# Correlation Analysis
+# Compute the correlation matrix
+correlation_matrix = df.corr()
+# Plot the heatmap
+plt.figure(figsize=(12, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.show()
+# Outlier Detection
+# Box plot for outlier detection
+plt.figure(figsize=(12, 8))
+sns.boxplot(data=df)
+plt.xticks(rotation=90)
+plt.show()
+# Visualization
+# Histograms
+# Histogram for 'MedHouseVal'
+plt.figure(figsize=(10, 6))
+sns.histplot(df['MedHouseVal'], bins=30, kde=True)
+plt.title('Distribution of Median House Value')
+plt.show()
+# Scatter Plots
+# Scatter plot of 'AveRooms' vs 'MedHouseVal'
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='AveRooms', y='MedHouseVal', data=df)
+plt.title('Average Rooms vs Median House Value')
+plt.show()
+# Heatmaps
+# Heatmap of the correlation matrix
+plt.figure(figsize=(12, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title('Heatmap of Feature Correlations')
+plt.show()
